@@ -35,6 +35,8 @@ function validate(nameValue, urlValue){
 
 //build Bookmarks DOM
 function buildBookmarks(){
+    //remove all bookmarks elements
+    bookmarksContainer.textContent = '';
     //build items
     bookmarks.forEach((bookmarks) =>{
         const {name, url} = bookmarks;
@@ -63,6 +65,18 @@ function buildBookmarks(){
         item.append(closeIcon, linkInfo);
         bookmarksContainer.appendChild(item);
     })
+}
+
+//delete Bookmarks
+function deleteBookmark(url){
+    bookmarks.forEach((bookmark, i)=> {
+        if(bookmark.url === url){
+            bookmarks.splice(i, 1);
+        }
+    })
+    //update bookmarks array in localStorage, re-populate DOM
+    localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
+    fetchBookmarks();
 }
 
 //fetch Bookmarks
